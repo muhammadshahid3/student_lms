@@ -5,7 +5,7 @@
 @section('content')
     <div class="logo-section">
         <i class="fas fa-graduation-cap"></i>
-        <h3 class="mt-2" style="color: #1f2937;">Student LMS</h3>
+        <h3 class="mt-2" style="color: #1f2937;">Student LMS portal</h3>
     </div>
 
     <h4 class="card-title text-center">Login</h4>
