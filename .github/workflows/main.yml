@@ -1,0 +1,42 @@
+name: Laravel Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+
+          script: |
+            cd /var/www/html/student_lms
+
+            git pull origin main
+
+            composer install --no-interaction --prefer-dist --optimize-autoloader
+
+            php artisan config:clear
+            php artisan cache:clear
+            php artisan route:clear
+            php artisan view:clear
+
+            php artisan optimize
+
+            sudo chmod -R 775 storage
+            sudo chmod -R 775 bootstrap/cache
+
+            sudo systemctl restart nginx
+            sudo systemctl restart php8.5-fpm
