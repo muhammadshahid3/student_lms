@@ -33,7 +33,7 @@
                 name="password" required>
         </div>
 
-        <button type="submit" class="btn btn-primary">Loginsssssss</button>
+        <button type="submit" class="btn btn-primary">Login</button>
     </form>
 
     <hr>
